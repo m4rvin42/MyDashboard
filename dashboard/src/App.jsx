@@ -10,15 +10,15 @@ export default function App() {
 
   return (
     <VerticalStackPanel debug={debug}>
-      <TimeWidget />
+      <TimeWidget verticalContentAlignment="Center" horizontalContentAlignment="Right" />
       <HorizontalStackPanel debug={debug}>
-        <TextWidget text="Welcome to the dashboard!" />
-        <TextWidget text="Enjoy your stay." />
-        <TextWidget text="Another example entry." />
+        <TextWidget text="Welcome to the dashboard!" verticalContentAlignment="Top" horizontalContentAlignment="Left" />
+        <TextWidget text="Enjoy your stay." verticalContentAlignment="Center" horizontalContentAlignment="Center" />
+        <TextWidget text="Another example entry." verticalContentAlignment="Bottom" horizontalContentAlignment="Right" />
       </HorizontalStackPanel>
       <HorizontalStackPanel debug={debug}>
-        <TextWidget text="Dashboard rules!" />
-        <TextWidget text="One more widget." />
+        <TextWidget text="Dashboard rules!" verticalContentAlignment="Center" horizontalContentAlignment="Left" />
+        <TextWidget text="One more widget." verticalContentAlignment="Center" horizontalContentAlignment="Right" />
       </HorizontalStackPanel>
     </VerticalStackPanel>
 
