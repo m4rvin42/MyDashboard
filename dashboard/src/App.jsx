@@ -5,12 +5,19 @@ import TextWidget from './widgets/TextWidget'
 import './App.css'
 
 export default function App() {
+  const debug = true
+
   return (
-    <VerticalStackPanel>
+    <VerticalStackPanel debug={debug}>
       <TimeWidget />
-      <HorizontalStackPanel>
+      <HorizontalStackPanel debug={debug}>
         <TextWidget text="Welcome to the dashboard!" />
         <TextWidget text="Enjoy your stay." />
+        <TextWidget text="Another example entry." />
+      </HorizontalStackPanel>
+      <HorizontalStackPanel debug={debug}>
+        <TextWidget text="Dashboard rules!" />
+        <TextWidget text="One more widget." />
       </HorizontalStackPanel>
     </VerticalStackPanel>
   )
