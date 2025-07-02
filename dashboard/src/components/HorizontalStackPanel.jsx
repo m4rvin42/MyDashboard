@@ -1,4 +1,5 @@
 import React from 'react'
+import ContentControl from './ContentControl'
 
 const verticalMap = {
   Top: 'flex-start',
@@ -22,13 +23,14 @@ export default function HorizontalStackPanel({ children }) {
           horizontalContentAlignment = 'Center',
           ...rest
         } = child.props
-        const style = {
-          alignItems: verticalMap[verticalContentAlignment],
-          justifyContent: horizontalMap[horizontalContentAlignment],
-        }
         return (
-          <div className="stack-child" style={style} key={idx}>
-            {React.cloneElement(child, rest)}
+          <div className="stack-child" key={idx}>
+            <ContentControl
+              verticalContentAlignment={verticalContentAlignment}
+              horizontalContentAlignment={horizontalContentAlignment}
+            >
+              {React.cloneElement(child, rest)}
+            </ContentControl>
           </div>
         )
       })}
