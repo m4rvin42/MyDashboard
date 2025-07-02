@@ -1,5 +1,6 @@
 import React from 'react'
 import ContentControl from './ContentControl'
+import DashboardTile from './DashboardTile'
 
 const verticalMap = {
   Top: 'flex-start',
@@ -20,7 +21,7 @@ export default function HorizontalStackPanel({ children, debug = false }) {
       data-testid="horizontal-stack">
       {React.Children.map(children, (child, idx) => (
         <div className="stack-child" key={idx}>
-          {child}
+          <DashboardTile>{child}</DashboardTile>
         </div>
       ))}
 
