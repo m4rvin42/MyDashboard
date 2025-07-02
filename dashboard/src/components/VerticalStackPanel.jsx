@@ -1,4 +1,17 @@
 import React from 'react'
+import ContentControl from './ContentControl'
+
+const verticalMap = {
+  Top: 'flex-start',
+  Center: 'center',
+  Bottom: 'flex-end',
+}
+
+const horizontalMap = {
+  Left: 'flex-start',
+  Center: 'center',
+  Right: 'flex-end',
+}
 
 export default function VerticalStackPanel({ children, debug = false }) {
   return (
@@ -11,6 +24,7 @@ export default function VerticalStackPanel({ children, debug = false }) {
           {child}
         </div>
       ))}
+
     </div>
   )
 }

@@ -11,5 +11,6 @@ describe('App', () => {
     expect(screen.getByTestId('time-widget')).toBeInTheDocument()
     const texts = screen.getAllByTestId('text-widget')
     expect(texts.length).toBe(5)
+
   })
 })

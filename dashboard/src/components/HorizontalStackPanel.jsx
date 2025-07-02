@@ -1,16 +1,29 @@
 import React from 'react'
+import ContentControl from './ContentControl'
+
+const verticalMap = {
+  Top: 'flex-start',
+  Center: 'center',
+  Bottom: 'flex-end',
+}
+
+const horizontalMap = {
+  Left: 'flex-start',
+  Center: 'center',
+  Right: 'flex-end',
+}
 
 export default function HorizontalStackPanel({ children, debug = false }) {
   return (
     <div
       className={`horizontal-stack-panel${debug ? ' debug' : ''}`}
-      data-testid="horizontal-stack"
-    >
+      data-testid="horizontal-stack">
       {React.Children.map(children, (child, idx) => (
         <div className="stack-child" key={idx}>
           {child}
         </div>
       ))}
+
     </div>
   )
 }

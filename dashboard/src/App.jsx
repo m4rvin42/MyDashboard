@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import VerticalStackPanel from './components/VerticalStackPanel'
 import HorizontalStackPanel from './components/HorizontalStackPanel'
 import TimeWidget from './widgets/TimeWidget'
@@ -20,5 +21,6 @@ export default function App() {
         <TextWidget text="One more widget." />
       </HorizontalStackPanel>
     </VerticalStackPanel>
+
   )
 }
