@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
+import ContentControl from '../components/ContentControl'
 
-export default function TimeWidget() {
+export default function TimeWidget({
+  verticalContentAlignment,
+  horizontalContentAlignment,
+}) {
   const [now, setNow] = useState(new Date())
 
   useEffect(() => {
@@ -10,6 +14,11 @@ export default function TimeWidget() {
   }, [])
 
   return (
-    <div data-testid="time-widget">Time: {now.toLocaleString()}</div>
+    <ContentControl
+      verticalContentAlignment={verticalContentAlignment}
+      horizontalContentAlignment={horizontalContentAlignment}
+    >
+      <div data-testid="time-widget">Time: {now.toLocaleString()}</div>
+    </ContentControl>
   )
 }

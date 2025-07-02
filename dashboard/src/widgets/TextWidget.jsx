@@ -1,9 +1,21 @@
 import { useEffect } from 'react'
+import ContentControl from '../components/ContentControl'
 
-export default function TextWidget({ text = '' }) {
+export default function TextWidget({
+  text = '',
+  verticalContentAlignment,
+  horizontalContentAlignment,
+}) {
   useEffect(() => {
     console.log('TextWidget mounted with text:', text)
   }, [text])
 
-  return <div data-testid="text-widget">{text}</div>
+  return (
+    <ContentControl
+      verticalContentAlignment={verticalContentAlignment}
+      horizontalContentAlignment={horizontalContentAlignment}
+    >
+      <div data-testid="text-widget">{text}</div>
+    </ContentControl>
+  )
 }
