@@ -1,12 +1,17 @@
-import Dashboard from './components/Dashboard'
+import VerticalStackPanel from './components/VerticalStackPanel'
+import HorizontalStackPanel from './components/HorizontalStackPanel'
+import TimeWidget from './widgets/TimeWidget'
+import TextWidget from './widgets/TextWidget'
 import './App.css'
 
 export default function App() {
-  const widgets = [
-    { type: 'time', props: {} },
-    { type: 'text', props: { text: 'Welcome to the dashboard!' } },
-    { type: 'text', props: { text: 'Enjoy your stay.' } },
-  ]
-
-  return <Dashboard widgets={widgets} />
+  return (
+    <VerticalStackPanel>
+      <TimeWidget />
+      <HorizontalStackPanel>
+        <TextWidget text="Welcome to the dashboard!" />
+        <TextWidget text="Enjoy your stay." />
+      </HorizontalStackPanel>
+    </VerticalStackPanel>
+  )
 }
