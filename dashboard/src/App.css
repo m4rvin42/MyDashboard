@@ -38,3 +38,12 @@
   flex: 1;
   display: flex;
 }
+
+.debug .vertical-stack-panel,
+.debug .horizontal-stack-panel {
+  border: 1px dashed #666;
+}
+
+.debug .stack-child {
+  border: 1px dashed red;
+}
