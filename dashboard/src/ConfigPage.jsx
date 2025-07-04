@@ -136,12 +136,24 @@ export default function ConfigPage() {
               {renderNode(child, [...path, i])}
             </div>
           ))}
-          <div style={{ position: 'absolute', top: 2, left: 2, display: 'flex', gap: '4px', zIndex: 1 }}>
+          <div
+            style={{
+              position: 'absolute',
+              top: 2,
+              left: 2,
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '4px',
+              zIndex: 1,
+            }}
+          >
             <button
               onClick={(e) => {
                 e.preventDefault()
                 openSettings(path)
               }}
+              aria-label="Configure panel"
+              title="Configure panel"
             >
               ⚙
             </button>
@@ -150,6 +162,8 @@ export default function ConfigPage() {
                 e.preventDefault()
                 setLayout((old) => removeAtPath(old, path))
               }}
+              aria-label="Remove panel"
+              title="Remove panel"
             >
               🗑
             </button>
@@ -172,12 +186,23 @@ export default function ConfigPage() {
           >
             {Widget ? <Widget {...node.props} /> : null}
           </div>
-          <div style={{ position: 'absolute', top: 2, right: 2, display: 'flex', gap: '4px' }}>
+          <div
+            style={{
+              position: 'absolute',
+              top: 2,
+              right: 2,
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '4px',
+            }}
+          >
             <button
               onClick={(e) => {
                 e.preventDefault()
                 openSettings(path)
               }}
+              aria-label="Configure widget"
+              title="Configure widget"
             >
               ⚙
             </button>
@@ -186,6 +211,8 @@ export default function ConfigPage() {
                 e.preventDefault()
                 setLayout((old) => removeAtPath(old, path))
               }}
+              aria-label="Remove widget"
+              title="Remove widget"
             >
               🗑
             </button>
