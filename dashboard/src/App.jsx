@@ -1,11 +1,19 @@
 import './App.css'
 import TestWidget from './TestWidget.jsx'
+import { VerticalStackPanel, HorizontalStackPanel } from './StackPanels.jsx'
 
 function App() {
   return (
-    <div style={{ display: 'flex', width: '100%', height: '100%' }}>
-      <TestWidget />
-    </div>
+    <VerticalStackPanel>
+      <HorizontalStackPanel style={{ flex: 1 }}>
+        <TestWidget />
+        <TestWidget />
+      </HorizontalStackPanel>
+      <HorizontalStackPanel style={{ flex: 1 }}>
+        <TestWidget />
+        <TestWidget />
+      </HorizontalStackPanel>
+    </VerticalStackPanel>
   )
 }
 
