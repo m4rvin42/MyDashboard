@@ -4,13 +4,13 @@ function randomColor() {
   return '#' + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0')
 }
 
-export default function TestWidget({ size = 200 }) {
+export default function TestWidget() {
   const color = useMemo(randomColor, [])
   const style = {
     border: `1px solid ${color}`,
     position: 'relative',
-    width: size,
-    height: size,
+    width: "100%",
+    height: "100%",
   }
   return (
     <div style={style}>
