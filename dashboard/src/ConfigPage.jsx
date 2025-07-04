@@ -36,6 +36,23 @@ function updateAtPath(layout, path, updater) {
   }
 }
 
+function removeAtPath(layout, path) {
+  if (path.length === 0) return layout
+  const [idx, ...rest] = path
+  if (rest.length === 0) {
+    return {
+      ...layout,
+      children: layout.children.map((c, i) => (i === idx ? null : c)),
+    }
+  }
+  return {
+    ...layout,
+    children: layout.children.map((c, i) =>
+      i === idx ? removeAtPath(c, rest) : c
+    ),
+  }
+}
+
 export default function ConfigPage() {
   const navigate = useNavigate()
   const [layout, setLayout] = useState(loadLayout())
@@ -97,56 +114,81 @@ export default function ConfigPage() {
       return (
         <div
           key={path.join('-')}
-          onDragOver={allowDrop}
-          onDrop={(e) => handleDrop(e, path.slice(0, -1), path[path.length - 1])}
           style={{ flex: 1, border: '1px dashed #888', margin: 2, minHeight: 30 }}
         />
       )
     }
+
     if (node.type === 'vertical' || node.type === 'horizontal') {
       const Panel = node.type === 'vertical' ? VerticalStackPanel : HorizontalStackPanel
       return (
         <Panel
           key={path.join('-')}
           style={{ border: '1px dashed #666', position: 'relative', flex: 1 }}
-          onDragOver={allowDrop}
-          onDrop={(e) => handleDrop(e, path)}
         >
-          {node.children && node.children.map((child, i) => renderNode(child, [...path, i]))}
-          <div style={{ position: 'absolute', top: 0, right: 0 }}>
-            <a
-              href="#"
+          {node.children && node.children.map((child, i) => (
+            <div
+              key={i}
+              style={{ flex: 1, position: 'relative' }}
+              onDragOver={allowDrop}
+              onDrop={(e) => handleDrop(e, path, i)}
+            >
+              {renderNode(child, [...path, i])}
+            </div>
+          ))}
+          <div style={{ position: 'absolute', top: 2, left: 2, display: 'flex', gap: '4px', zIndex: 1 }}>
+            <button
               onClick={(e) => {
                 e.preventDefault()
                 openSettings(path)
               }}
             >
-              Settings
-            </a>
+              ⚙
+            </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault()
+                setLayout((old) => removeAtPath(old, path))
+              }}
+            >
+              🗑
+            </button>
           </div>
         </Panel>
       )
     }
+
     if (node.type === 'widget') {
       const Widget = widgets[node.widget]
       return (
         <div
           key={path.join('-')}
           style={{ position: 'relative', border: '1px solid #ccc', flex: 1 }}
-          onDragOver={allowDrop}
-          onDrop={(e) => handleDrop(e, path.slice(0, -1), path[path.length - 1])}
         >
-          {Widget ? <Widget {...node.props} /> : null}
-          <div style={{ position: 'absolute', top: 0, right: 0 }}>
-            <a
-              href="#"
+          <div
+            style={{ width: '100%', height: '100%' }}
+            onDragOver={allowDrop}
+            onDrop={(e) => handleDrop(e, path.slice(0, -1), path[path.length - 1])}
+          >
+            {Widget ? <Widget {...node.props} /> : null}
+          </div>
+          <div style={{ position: 'absolute', top: 2, right: 2, display: 'flex', gap: '4px' }}>
+            <button
               onClick={(e) => {
                 e.preventDefault()
                 openSettings(path)
               }}
             >
-              Settings
-            </a>
+              ⚙
+            </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault()
+                setLayout((old) => removeAtPath(old, path))
+              }}
+            >
+              🗑
+            </button>
           </div>
         </div>
       )
