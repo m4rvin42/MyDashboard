@@ -12,6 +12,12 @@ function App() {
       <HorizontalStackPanel style={{ flex: 1 }}>
         <TestWidget />
         <TestWidget />
+        <TestWidget />
+      </HorizontalStackPanel>
+      <HorizontalStackPanel style={{ flex: 1 }}>
+        <TestWidget />
+        <TestWidget />
+        <TestWidget />
       </HorizontalStackPanel>
     </VerticalStackPanel>
   )
