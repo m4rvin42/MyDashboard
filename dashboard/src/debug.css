@@ -1,0 +1,21 @@
+body.debug #root {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+body.debug .logo {
+  background-color: rgba(0, 255, 0, 0.2);
+}
+body.debug h1 {
+  background-color: rgba(0, 0, 255, 0.2);
+}
+body.debug h3 {
+  background-color: rgba(255, 255, 0, 0.2);
+}
+body.debug .card {
+  background-color: rgba(255, 0, 255, 0.2);
+}
+body.debug button {
+  background-color: rgba(0, 255, 255, 0.2);
+}
+body.debug p {
+  background-color: rgba(255, 128, 0, 0.2);
+}
