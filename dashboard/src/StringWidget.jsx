@@ -4,8 +4,11 @@ export default function StringWidget({ text }) {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    
+    color: 'blue',
+    backgroundColor: 'yellow',
     width: '100%',
-    height: '100%',
+    height: '100%'
   }
   return (
     <div style={style}>{text}</div>
