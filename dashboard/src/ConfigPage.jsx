@@ -122,30 +122,18 @@ export default function ConfigPage() {
     if (node.type === 'vertical' || node.type === 'horizontal') {
       const Panel = node.type === 'vertical' ? VerticalStackPanel : HorizontalStackPanel
       return (
-        <Panel
+        <div
           key={path.join('-')}
-          style={{ border: '1px dashed #666', position: 'relative', flex: 1 }}
+          style={{
+            border: '1px dashed #666',
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+            position: 'relative',
+          }}
         >
-          {node.children && node.children.map((child, i) => (
-            <div
-              key={i}
-              style={{ flex: 1, position: 'relative' }}
-              onDragOver={allowDrop}
-              onDrop={(e) => handleDrop(e, path, i)}
-            >
-              {renderNode(child, [...path, i])}
-            </div>
-          ))}
           <div
-            style={{
-              position: 'absolute',
-              top: 2,
-              left: 2,
-              display: 'flex',
-              flexDirection: 'row',
-              gap: '4px',
-              zIndex: 1,
-            }}
+            style={{ display: 'flex', gap: '4px', padding: '2px' }}
           >
             <button
               onClick={(e) => {
@@ -168,7 +156,23 @@ export default function ConfigPage() {
               🗑
             </button>
           </div>
-        </Panel>
+          <Panel
+            style={{ flex: 1, position: 'relative' }}
+            onDragOver={allowDrop}
+            onDrop={(e) => handleDrop(e, path)}
+          >
+            {node.children && node.children.map((child, i) => (
+              <div
+                key={i}
+                style={{ flex: 1, position: 'relative' }}
+                onDragOver={allowDrop}
+                onDrop={(e) => handleDrop(e, path, i)}
+              >
+                {renderNode(child, [...path, i])}
+              </div>
+            ))}
+          </Panel>
+        </div>
       )
     }
 
@@ -177,25 +181,9 @@ export default function ConfigPage() {
       return (
         <div
           key={path.join('-')}
-          style={{ position: 'relative', border: '1px solid #ccc', flex: 1 }}
+          style={{ border: '1px solid #ccc', display: 'flex', flexDirection: 'column', flex: 1 }}
         >
-          <div
-            style={{ width: '100%', height: '100%' }}
-            onDragOver={allowDrop}
-            onDrop={(e) => handleDrop(e, path.slice(0, -1), path[path.length - 1])}
-          >
-            {Widget ? <Widget {...node.props} /> : null}
-          </div>
-          <div
-            style={{
-              position: 'absolute',
-              top: 2,
-              right: 2,
-              display: 'flex',
-              flexDirection: 'row',
-              gap: '4px',
-            }}
-          >
+          <div style={{ display: 'flex', gap: '4px', justifyContent: 'flex-end', padding: '2px' }}>
             <button
               onClick={(e) => {
                 e.preventDefault()
@@ -216,6 +204,13 @@ export default function ConfigPage() {
             >
               🗑
             </button>
+          </div>
+          <div
+            style={{ width: '100%', height: '100%', flex: 1 }}
+            onDragOver={allowDrop}
+            onDrop={(e) => handleDrop(e, path.slice(0, -1), path[path.length - 1])}
+          >
+            {Widget ? <Widget {...node.props} /> : null}
           </div>
         </div>
       )
