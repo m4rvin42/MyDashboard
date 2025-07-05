@@ -4,6 +4,7 @@ export default function DateTimeWidget({
   fontSize = '1rem',
   textColor = 'green',
   backgroundColor = 'red',
+  showBorder = true,
 } = {}) {
   const [now, setNow] = useState(new Date())
   useEffect(() => {
@@ -11,7 +12,7 @@ export default function DateTimeWidget({
     return () => clearInterval(id)
   }, [])
   const style = {
-    border: '1px solid #888',
+    border: showBorder ? '1px solid #888' : 'none',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

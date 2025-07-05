@@ -4,10 +4,10 @@ function randomColor() {
   return '#' + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0')
 }
 
-export default function TestWidget() {
+export default function TestWidget({ showBorder = true } = {}) {
   const color = useMemo(randomColor, [])
   const style = {
-    border: `1px solid ${color}`,
+    border: showBorder ? `1px solid ${color}` : 'none',
     position: 'relative',
     width: "100%",
     height: "100%",

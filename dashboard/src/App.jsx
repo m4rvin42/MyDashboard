@@ -30,7 +30,7 @@ function renderNode(node, index) {
   }
   if (node.type === 'widget') {
     const Widget = widgets[node.widget]
-    return Widget ? <Widget key={index} {...node.props} /> : null
+    return Widget ? <Widget key={index} showBorder={false} {...node.props} /> : null
   }
   return null
 }
