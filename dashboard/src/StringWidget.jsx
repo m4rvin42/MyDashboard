@@ -3,9 +3,10 @@ export default function StringWidget({
   fontSize = '1rem',
   textColor = 'blue',
   backgroundColor = 'yellow',
+  showBorder = true,
 } = {}) {
   const style = {
-    border: '1px solid #888',
+    border: showBorder ? '1px solid #888' : 'none',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
