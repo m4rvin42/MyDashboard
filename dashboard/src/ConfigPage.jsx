@@ -113,8 +113,46 @@ export default function ConfigPage() {
         if (node.type === 'widget') {
           if (node.widget === 'StringWidget') {
             const text = prompt('Enter text', node.props?.text || '')
-            if (text !== null) {
-              return { ...node, props: { text } }
+            if (text === null) return node
+            const fontSize = prompt(
+              'Font size',
+              node.props?.fontSize || '1rem',
+            )
+            if (fontSize === null) return node
+            const textColor = prompt(
+              'Text color',
+              node.props?.textColor || 'blue',
+            )
+            if (textColor === null) return node
+            const backgroundColor = prompt(
+              'Background color',
+              node.props?.backgroundColor || 'yellow',
+            )
+            if (backgroundColor === null) return node
+            return {
+              ...node,
+              props: { text, fontSize, textColor, backgroundColor },
+            }
+          }
+          if (node.widget === 'DateTimeWidget') {
+            const fontSize = prompt(
+              'Font size',
+              node.props?.fontSize || '1rem',
+            )
+            if (fontSize === null) return node
+            const textColor = prompt(
+              'Text color',
+              node.props?.textColor || 'green',
+            )
+            if (textColor === null) return node
+            const backgroundColor = prompt(
+              'Background color',
+              node.props?.backgroundColor || 'red',
+            )
+            if (backgroundColor === null) return node
+            return {
+              ...node,
+              props: { fontSize, textColor, backgroundColor },
             }
           }
           return node
