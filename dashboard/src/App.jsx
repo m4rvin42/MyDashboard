@@ -37,11 +37,12 @@ function renderNode(node, index) {
 
 function App() {
   const layout = loadLayout()
+  const ip = window.PUBLIC_IP || 'unknown'
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
       {renderNode(layout)}
       <div style={{ position: 'absolute', top: 10, right: 10 }}>
-        <Link to="/config">Configure</Link>
+        <Link to="/config">{`Configure (${ip})`}</Link>
       </div>
     </div>
   )
