@@ -65,6 +65,7 @@ export default function ConfigPage() {
 
   function handleDrop(e, path, index) {
     e.preventDefault()
+    e.stopPropagation()
     const item = JSON.parse(e.dataTransfer.getData('application/json'))
     setLayout((old) => {
       const panelPath = path
