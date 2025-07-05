@@ -82,6 +82,30 @@ export default function ConfigPage() {
     }
   }
 
+  function DropZone({ onDrop, children, style }) {
+    const [over, setOver] = useState(false)
+    const base = {
+      border: '3px dashed #888',
+      padding: 8,
+      transition: 'border-color 0.2s, background-color 0.2s, transform 0.2s',
+      ...style,
+    }
+    const active = over
+      ? { borderColor: '#4f8ef7', backgroundColor: 'rgba(79,142,247,0.1)', transform: 'scale(1.02)' }
+      : {}
+    return (
+      <div
+        style={{ ...base, ...active }}
+        onDragEnter={(e) => { e.preventDefault(); setOver(true) }}
+        onDragLeave={() => setOver(false)}
+        onDragOver={allowDrop}
+        onDrop={(e) => { setOver(false); onDrop(e) }}
+      >
+        {children}
+      </div>
+    )
+  }
+
   function openSettings(path) {
     setLayout((old) =>
       updateAtPath(old, path, (node) => {
@@ -111,10 +135,13 @@ export default function ConfigPage() {
 
   const renderNode = (node, path = []) => {
     if (!node) {
+      const parent = path.slice(0, -1)
+      const idx = path[path.length - 1]
       return (
-        <div
+        <DropZone
           key={path.join('-')}
-          style={{ flex: 1, border: '1px dashed #888', margin: 2, minHeight: 30 }}
+          onDrop={(e) => handleDrop(e, parent, idx)}
+          style={{ flex: 1, margin: 2, minHeight: 30 }}
         />
       )
     }
@@ -133,7 +160,7 @@ export default function ConfigPage() {
           }}
         >
           <div
-            style={{ display: 'flex', gap: '4px', padding: '2px' }}
+            style={{ display: 'flex', gap: '4px', padding: '6px', border: '2px solid #666' }}
           >
             <button
               onClick={(e) => {
@@ -162,14 +189,13 @@ export default function ConfigPage() {
             onDrop={(e) => handleDrop(e, path)}
           >
             {node.children && node.children.map((child, i) => (
-              <div
+              <DropZone
                 key={i}
-                style={{ flex: 1, position: 'relative' }}
-                onDragOver={allowDrop}
                 onDrop={(e) => handleDrop(e, path, i)}
+                style={{ flex: 1, position: 'relative', border: 'none', padding: 0 }}
               >
                 {renderNode(child, [...path, i])}
-              </div>
+              </DropZone>
             ))}
           </Panel>
         </div>
@@ -183,7 +209,7 @@ export default function ConfigPage() {
           key={path.join('-')}
           style={{ border: '1px solid #ccc', display: 'flex', flexDirection: 'column', flex: 1 }}
         >
-          <div style={{ display: 'flex', gap: '4px', justifyContent: 'flex-end', padding: '2px' }}>
+          <div style={{ display: 'flex', gap: '4px', justifyContent: 'flex-end', padding: '6px', border: '2px solid #ccc' }}>
             <button
               onClick={(e) => {
                 e.preventDefault()
@@ -241,13 +267,12 @@ export default function ConfigPage() {
           Save
         </button>
       </div>
-      <div
-        style={{ flex: 1, border: '1px solid #555', padding: 4 }}
-        onDragOver={allowDrop}
+      <DropZone
         onDrop={(e) => handleDrop(e, [])}
+        style={{ flex: 1, border: '3px solid #555', padding: 12 }}
       >
         {renderNode(layout, [])}
-      </div>
+      </DropZone>
     </div>
   )
 }
