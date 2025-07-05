@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react'
 
-export default function DateTimeWidget() {
+export default function DateTimeWidget({
+  fontSize = '1rem',
+  textColor = 'green',
+  backgroundColor = 'red',
+} = {}) {
   const [now, setNow] = useState(new Date())
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 1000)
@@ -11,8 +15,9 @@ export default function DateTimeWidget() {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    color: 'green',
-    backgroundColor: 'red',
+    color: textColor,
+    backgroundColor,
+    fontSize,
     width: '100%',
     height: '100%',
   }
