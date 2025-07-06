@@ -13,11 +13,29 @@ export default function MailWidget({
 
   useEffect(() => {
     if (!clientId) return
-    fetchMessages()
+    checkConnection()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clientId])
 
+  async function checkConnection() {
+    console.log('MailWidget: Checking backend connectivity')
+    try {
+      const resp = await fetch('/api/test')
+      const data = await resp.json()
+      console.log('MailWidget: /api/test response', data)
+      if (resp.ok && data.ok) {
+        fetchMessages()
+      } else {
+        throw new Error(data.error || 'Backend test failed')
+      }
+    } catch (err) {
+      console.error('MailWidget: Backend test error', err)
+      setError(err.message)
+    }
+  }
+
   async function startDeviceCodeFlow() {
+    console.log('MailWidget: Starting device code flow')
     try {
       const resp = await fetch('/api/device-code', {
         method: 'POST',
@@ -27,8 +45,10 @@ export default function MailWidget({
       const data = await resp.json()
       if (!resp.ok) throw new Error(data.error || 'Failed to obtain device code')
       setDeviceInfo({ ...data, interval: 5000 })
+      console.log('MailWidget: Device code obtained, polling for token')
       pollForToken()
     } catch (err) {
+      console.error('MailWidget: Device code flow error', err)
       setError(err.message)
     }
   }
@@ -36,6 +56,7 @@ export default function MailWidget({
   async function pollForToken() {
     while (true) {
       await new Promise((r) => setTimeout(r, 5000))
+      console.log('MailWidget: Polling for token')
       try {
         const resp = await fetch('/api/poll-token', {
           method: 'POST',
@@ -45,11 +66,13 @@ export default function MailWidget({
         const data = await resp.json()
         if (resp.ok && data.success) {
           setDeviceInfo(null)
+          console.log('MailWidget: Token acquired')
           fetchMessages()
           break
         }
         if (!data.pending) throw new Error(data.error || 'Failed to obtain token')
       } catch (err) {
+        console.error('MailWidget: Poll token error', err)
         setError(err.message)
         break
       }
@@ -57,17 +80,21 @@ export default function MailWidget({
   }
 
   async function fetchMessages() {
+    console.log('MailWidget: Fetching messages')
     try {
       const resp = await fetch(`/api/messages?clientId=${clientId}&numMessages=${numMessages}`)
       const data = await resp.json()
       if (resp.ok) {
         setMessages(data)
+        console.log('MailWidget: Messages loaded', data)
       } else if (resp.status === 401) {
+        console.log('MailWidget: Unauthorized, starting auth flow')
         startDeviceCodeFlow()
       } else {
         throw new Error(data.error || 'Failed to load messages')
       }
     } catch (err) {
+      console.error('MailWidget: Fetch messages error', err)
       setError(err.message)
     }
   }
