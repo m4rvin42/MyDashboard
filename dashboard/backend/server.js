@@ -9,6 +9,10 @@ const __dirname = path.dirname(__filename)
 const app = express()
 app.use(express.json())
 
+app.get('/api/test', (req, res) => {
+  res.json({ ok: true })
+})
+
 const tokens = new Map()
 
 app.post('/api/device-code', async (req, res) => {
