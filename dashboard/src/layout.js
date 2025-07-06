@@ -12,6 +12,13 @@ export const defaultLayout = {
     {
       type: 'horizontal',
       children: [
+        { type: 'widget', widget: 'MailWidget' },
+      ],
+      style: { flex: 1 }
+    },
+    {
+      type: 'horizontal',
+      children: [
         { type: 'widget', widget: 'TestWidget' },
         { type: 'widget', widget: 'TestWidget' },
         { type: 'widget', widget: 'TestWidget' },
