@@ -5,8 +5,9 @@ import { VerticalStackPanel, HorizontalStackPanel } from './StackPanels.jsx'
 import DateTimeWidget from './DateTimeWidget.jsx'
 import StringWidget from './StringWidget.jsx'
 import TestWidget from './TestWidget.jsx'
+import MailWidget from './MailWidget.jsx'
 
-const widgets = { DateTimeWidget, StringWidget, TestWidget }
+const widgets = { DateTimeWidget, StringWidget, TestWidget, MailWidget }
 
 const palette = [
   { label: 'Vertical Stack', data: { type: 'vertical', children: [] } },
@@ -14,6 +15,7 @@ const palette = [
   { label: 'DateTimeWidget', data: { type: 'widget', widget: 'DateTimeWidget' } },
   { label: 'StringWidget', data: { type: 'widget', widget: 'StringWidget', props: { text: '' } } },
   { label: 'TestWidget', data: { type: 'widget', widget: 'TestWidget' } },
+  { label: 'MailWidget', data: { type: 'widget', widget: 'MailWidget', props: { clientId: '', tenant: 'common' } } },
 ]
 
 function getNode(layout, path) {
@@ -153,6 +155,18 @@ export default function ConfigPage() {
             return {
               ...node,
               props: { fontSize, textColor, backgroundColor },
+            }
+          }
+          if (node.widget === 'MailWidget') {
+            const clientId = prompt('Azure app client ID', node.props?.clientId || '')
+            if (clientId === null) return node
+            const tenant = prompt('Tenant', node.props?.tenant || 'common')
+            if (tenant === null) return node
+            const num = prompt('Number of messages', node.props?.numMessages || '5')
+            if (num === null) return node
+            return {
+              ...node,
+              props: { clientId, tenant, numMessages: parseInt(num, 10) || 5 },
             }
           }
           return node
