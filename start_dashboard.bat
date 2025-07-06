@@ -8,8 +8,8 @@ REM Build the image
 docker build -t %IMAGE_NAME% %SCRIPT_DIR%
 
 REM Ensure backend dependencies and start server in new window
-npm install --prefix server >nul
-start "backend" cmd /c "npm start --prefix server"
+npm --prefix server install >nul
+start "backend" cmd /c "npm --prefix server start"
 
 REM Obtain public IP
 for /f "usebackq delims=" %%i in (`curl -s https://api.ipify.org`) do set PUBLIC_IP=%%i
