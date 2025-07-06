@@ -1,6 +1,9 @@
 # MyDashboard
 
 This project contains a small React dashboard served from a Docker container.
+The application now includes a tiny Node.js backend which performs the OAuth
+device-code flow and fetches e‑mails from Microsoft Graph. This backend avoids
+CORS issues by handling the authentication server-side.
 
 Two helper scripts are provided to build and run the container while injecting
 the host's public IP address via the `PUBLIC_IP` environment variable.

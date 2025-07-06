@@ -1,6 +1,8 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.  
+The Docker image also contains a small Express server used to perform OAuth requests
+to Microsoft Graph on behalf of the frontend.
 
 Currently, two official plugins are available:
 
