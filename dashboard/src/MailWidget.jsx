@@ -7,81 +7,48 @@ export default function MailWidget({
   numMessages = 5,
   showBorder = true,
 } = {}) {
-  const [token, setToken] = useState(null)
   const [messages, setMessages] = useState(null)
   const [deviceInfo, setDeviceInfo] = useState(null)
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    const stored = localStorage.getItem(`mailWidgetToken:${clientId}`)
-    if (stored) {
-      try {
-        const data = JSON.parse(stored)
-        if (data.expires_at > Date.now()) {
-          setToken(data.access_token)
-        }
-      } catch {
-        // ignore stored token parse errors
-      }
-    }
-  }, [clientId])
-
-  useEffect(() => {
     if (!clientId) return
-    if (!token && !deviceInfo && !error) {
-      startDeviceCodeFlow()
-    }
+    fetchMessages()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clientId, token, deviceInfo, error])
-
-  useEffect(() => {
-    if (token && !messages && !error) {
-      fetchMessages(token)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token, messages, error])
+  }, [clientId])
 
   async function startDeviceCodeFlow() {
     try {
-      const params = new URLSearchParams()
-      params.append('client_id', clientId)
-      params.append('scope', scopes)
-      const resp = await fetch(`https://login.microsoftonline.com/${tenant}/oauth2/v2.0/devicecode`, {
+      const resp = await fetch('/api/device-code', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: params.toString(),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ clientId, tenant, scopes }),
       })
       const data = await resp.json()
-      if (!resp.ok) throw new Error(data.error_description || 'Failed to obtain device code')
-      setDeviceInfo(data)
-      pollForToken(data.device_code, data.interval * 1000)
+      if (!resp.ok) throw new Error(data.error || 'Failed to obtain device code')
+      setDeviceInfo({ ...data, interval: 5000 })
+      pollForToken()
     } catch (err) {
       setError(err.message)
     }
   }
 
-  async function pollForToken(deviceCode, intervalMs) {
+  async function pollForToken() {
     while (true) {
-      await new Promise((r) => setTimeout(r, intervalMs))
+      await new Promise((r) => setTimeout(r, 5000))
       try {
-        const params = new URLSearchParams()
-        params.append('grant_type', 'urn:ietf:params:oauth:grant-type:device_code')
-        params.append('client_id', clientId)
-        params.append('device_code', deviceCode)
-        const resp = await fetch(`https://login.microsoftonline.com/${tenant}/oauth2/v2.0/token`, {
+        const resp = await fetch('/api/poll-token', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: params.toString(),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ clientId, tenant }),
         })
         const data = await resp.json()
-        if (resp.ok) {
-          const expiresAt = Date.now() + data.expires_in * 1000
-          localStorage.setItem(`mailWidgetToken:${clientId}`, JSON.stringify({ access_token: data.access_token, expires_at: expiresAt }))
+        if (resp.ok && data.success) {
           setDeviceInfo(null)
-          setToken(data.access_token)
+          fetchMessages()
           break
         }
-        if (data.error !== 'authorization_pending') throw new Error(data.error_description || 'Failed to obtain token')
+        if (!data.pending) throw new Error(data.error || 'Failed to obtain token')
       } catch (err) {
         setError(err.message)
         break
@@ -89,14 +56,17 @@ export default function MailWidget({
     }
   }
 
-  async function fetchMessages(tok) {
+  async function fetchMessages() {
     try {
-      const resp = await fetch(`https://graph.microsoft.com/v1.0/me/messages?$top=${numMessages}`, {
-        headers: { Authorization: `Bearer ${tok}` },
-      })
+      const resp = await fetch(`/api/messages?clientId=${clientId}&numMessages=${numMessages}`)
       const data = await resp.json()
-      if (!resp.ok) throw new Error(data.error?.message || 'Failed to load messages')
-      setMessages(data.value)
+      if (resp.ok) {
+        setMessages(data)
+      } else if (resp.status === 401) {
+        startDeviceCodeFlow()
+      } else {
+        throw new Error(data.error || 'Failed to load messages')
+      }
     } catch (err) {
       setError(err.message)
     }
