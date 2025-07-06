@@ -9,16 +9,14 @@ Currently, two official plugins are available:
 
 ## Running in Docker
 
-To build and run this app in Docker:
+To build and run this app in Docker use the scripts in the project root:
 
 ```sh
-# Build the Docker image
-docker build -t dashboard .
-
-# Run the container (serves on http://localhost:8080)
-docker run -p 8080:80 dashboard
+../start_dashboard.sh
 ```
 
+On Windows run `start_dashboard.bat`. These scripts build the image, obtain your
+public IP address and run the container with that value passed as `PUBLIC_IP`.
 Then open [http://localhost:8080](http://localhost:8080) in your browser.
 
 ## Expanding the ESLint configuration

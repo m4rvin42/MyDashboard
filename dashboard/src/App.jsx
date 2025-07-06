@@ -1,35 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { Link } from 'react-router-dom'
+import TestWidget from './TestWidget.jsx'
+import DateTimeWidget from './DateTimeWidget.jsx'
+import StringWidget from './StringWidget.jsx'
+import { VerticalStackPanel, HorizontalStackPanel } from './StackPanels.jsx'
+import { loadLayout } from './layout.js'
+
+const widgets = {
+  DateTimeWidget,
+  StringWidget,
+  TestWidget,
+}
+
+function renderNode(node, index) {
+  if (!node) return null
+  if (node.type === 'vertical') {
+    return (
+      <VerticalStackPanel key={index} style={node.style}>
+        {node.children && node.children.map(renderNode)}
+      </VerticalStackPanel>
+    )
+  }
+  if (node.type === 'horizontal') {
+    return (
+      <HorizontalStackPanel key={index} style={node.style}>
+        {node.children && node.children.map(renderNode)}
+      </HorizontalStackPanel>
+    )
+  }
+  if (node.type === 'widget') {
+    const Widget = widgets[node.widget]
+    return Widget ? <Widget key={index} showBorder={false} {...node.props} /> : null
+  }
+  return null
+}
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const layout = loadLayout()
+  const ip = window.PUBLIC_IP || 'unknown'
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+      {renderNode(layout)}
+      <div style={{ position: 'absolute', top: 10, right: 10 }}>
+        <Link to="/config">{`Configure (${ip})`}</Link>
       </div>
-      <h1>Vite + React blabla </h1>
-      <h3>hallo ;-D</h3>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
