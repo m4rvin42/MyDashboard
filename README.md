@@ -39,3 +39,14 @@ To start both the dashboard and backend simultaneously run:
 
 The dashboard will be available on [http://localhost:8080](http://localhost:8080)
 and the backend on [http://localhost:3000/test](http://localhost:3000/test).
+
+### Windows
+
+To run only the backend on Windows use:
+
+```bat
+start_backend.bat
+```
+
+The script builds the `backend` image if it does not exist and then runs the
+container exposing port `3000`.
