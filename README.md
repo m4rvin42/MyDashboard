@@ -42,6 +42,12 @@ and the backend on [http://localhost:3000/test](http://localhost:3000/test).
 
 ### Windows
 
+To start both the dashboard and backend on Windows run:
+
+```bat
+start_services.bat
+```
+
 To run only the backend on Windows use:
 
 ```bat
