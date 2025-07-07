@@ -1,0 +1,12 @@
+version: '3'
+services:
+  dashboard:
+    build: ./dashboard
+    ports:
+      - "8080:80"
+    environment:
+      - PUBLIC_IP=${PUBLIC_IP}
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
