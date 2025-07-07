@@ -6,6 +6,7 @@ export const defaultLayout = {
       children: [
         { type: 'widget', widget: 'DateTimeWidget' },
         { type: 'widget', widget: 'StringWidget', props: { text: 'Hello from StringWidget' } },
+        { type: 'widget', widget: 'BackendTestWidget' },
       ],
       style: { flex: 1 }
     },

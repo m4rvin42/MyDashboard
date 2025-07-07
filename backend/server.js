@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 const PORT = 3000;
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+});
 app.get('/test', (req, res) => {
   res.json({ message: 'Backend is running' });
 });
