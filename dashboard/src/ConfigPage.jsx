@@ -5,8 +5,9 @@ import { VerticalStackPanel, HorizontalStackPanel } from './StackPanels.jsx'
 import DateTimeWidget from './DateTimeWidget.jsx'
 import StringWidget from './StringWidget.jsx'
 import TestWidget from './TestWidget.jsx'
+import BackendTestWidget from './BackendTestWidget.jsx'
 
-const widgets = { DateTimeWidget, StringWidget, TestWidget }
+const widgets = { DateTimeWidget, StringWidget, TestWidget, BackendTestWidget }
 
 const palette = [
   { label: 'Vertical Stack', data: { type: 'vertical', children: [] } },
@@ -14,6 +15,7 @@ const palette = [
   { label: 'DateTimeWidget', data: { type: 'widget', widget: 'DateTimeWidget' } },
   { label: 'StringWidget', data: { type: 'widget', widget: 'StringWidget', props: { text: '' } } },
   { label: 'TestWidget', data: { type: 'widget', widget: 'TestWidget' } },
+  { label: 'BackendTestWidget', data: { type: 'widget', widget: 'BackendTestWidget' } },
 ]
 
 function getNode(layout, path) {

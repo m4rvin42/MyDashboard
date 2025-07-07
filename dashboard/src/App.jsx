@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import TestWidget from './TestWidget.jsx'
 import DateTimeWidget from './DateTimeWidget.jsx'
 import StringWidget from './StringWidget.jsx'
+import BackendTestWidget from './BackendTestWidget.jsx'
 import { VerticalStackPanel, HorizontalStackPanel } from './StackPanels.jsx'
 import { loadLayout } from './layout.js'
 
@@ -10,6 +11,7 @@ const widgets = {
   DateTimeWidget,
   StringWidget,
   TestWidget,
+  BackendTestWidget,
 }
 
 function renderNode(node, index) {
