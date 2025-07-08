@@ -12,5 +12,7 @@ services:
     build: ./backend
     environment:
       - PUBLIC_IP=${PUBLIC_IP}
+      - MSAL_CLIENT_ID=${MSAL_CLIENT_ID}
+      - MSAL_TENANT_ID=${MSAL_TENANT_ID}
     ports:
       - "3000:3000"
