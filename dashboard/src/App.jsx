@@ -2,6 +2,7 @@ import './App.css'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import TestWidget from './TestWidget.jsx'
+import BackendTestWidget from './BackendTestWidget.jsx'
 import DateTimeWidget from './DateTimeWidget.jsx'
 import StringWidget from './StringWidget.jsx'
 import { VerticalStackPanel, HorizontalStackPanel } from './StackPanels.jsx'
@@ -10,6 +11,7 @@ import { loadLayout } from './layout.js'
 const widgets = {
   DateTimeWidget,
   StringWidget,
+  BackendTestWidget,
   TestWidget,
 }
 
