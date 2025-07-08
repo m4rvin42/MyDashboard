@@ -25,3 +25,11 @@ to build and start both containers. The frontend is available on
 [http://localhost:3000](http://localhost:3000). The current IP is displayed in
 the "Configure" link.
 
+### Configuration
+
+Docker Compose loads variables from a file named `.env` in this directory.
+Copy `\.env.sample` to `.env` and fill in your `MSAL_CLIENT_ID` and
+`MSAL_TENANT_ID` values for the Azure AD app registration. The start scripts
+already set `PUBLIC_IP` automatically, but you can override it in `.env` if
+needed. The `.env` file is ignored by Git so your credentials remain local.
+
