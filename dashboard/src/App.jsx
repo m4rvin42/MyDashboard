@@ -5,6 +5,7 @@ import TestWidget from './TestWidget.jsx'
 import BackendTestWidget from './BackendTestWidget.jsx'
 import DateTimeWidget from './DateTimeWidget.jsx'
 import StringWidget from './StringWidget.jsx'
+import MailWidget from './MailWidget.jsx'
 import { VerticalStackPanel, HorizontalStackPanel } from './StackPanels.jsx'
 import { loadLayout } from './layout.js'
 
@@ -13,6 +14,7 @@ const widgets = {
   StringWidget,
   BackendTestWidget,
   TestWidget,
+  MailWidget,
 }
 
 function renderNode(node, index) {

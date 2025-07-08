@@ -6,8 +6,9 @@ import DateTimeWidget from './DateTimeWidget.jsx'
 import StringWidget from './StringWidget.jsx'
 import TestWidget from './TestWidget.jsx'
 import BackendTestWidget from './BackendTestWidget.jsx'
+import MailWidget from './MailWidget.jsx'
 
-const widgets = { DateTimeWidget, StringWidget, TestWidget, BackendTestWidget }
+const widgets = { DateTimeWidget, StringWidget, TestWidget, BackendTestWidget, MailWidget }
 
 const palette = [
   { label: 'Vertical Stack', data: { type: 'vertical', children: [] } },
@@ -16,6 +17,7 @@ const palette = [
   { label: 'StringWidget', data: { type: 'widget', widget: 'StringWidget', props: { text: '' } } },
   { label: 'TestWidget', data: { type: 'widget', widget: 'TestWidget' } },
   { label: 'BackendTestWidget', data: { type: 'widget', widget: 'BackendTestWidget' } },
+  { label: 'MailWidget', data: { type: 'widget', widget: 'MailWidget' } },
 ]
 
 function getNode(layout, path) {
@@ -155,6 +157,16 @@ export default function ConfigPage() {
             return {
               ...node,
               props: { fontSize, textColor, backgroundColor },
+            }
+          }
+          if (node.widget === 'MailWidget') {
+            const mailFolder = prompt('Mail folder', node.props?.mailFolder || 'Inbox')
+            if (mailFolder === null) return node
+            const maxMessages = prompt('Max messages', node.props?.maxMessages || '5')
+            if (maxMessages === null) return node
+            return {
+              ...node,
+              props: { mailFolder, maxMessages: parseInt(maxMessages, 10) || 5 },
             }
           }
           return node
