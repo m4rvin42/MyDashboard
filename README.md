@@ -1,9 +1,9 @@
 # MyDashboard
 
-This project contains a small React dashboard served from a Docker container.
-
-Two helper scripts are provided to build and run the container while injecting
-the host's public IP address via the `PUBLIC_IP` environment variable.
+This project now consists of a React frontend and a small Express backend.
+Both services are built with Docker and orchestrated via `docker-compose`.
+The helper scripts start the compose stack while injecting the host's public IP
+address via the `PUBLIC_IP` environment variable.
 
 ## Usage
 
@@ -19,7 +19,9 @@ the host's public IP address via the `PUBLIC_IP` environment variable.
 start_dashboard.bat
 ```
 
-Each script queries the public IP with `curl`, builds the Docker image and runs
-the container with the retrieved IP. The application displays the IP inside the
-"Configure" link.
+Each script queries the public IP with `curl` and then runs `docker compose`
+to build and start both containers. The frontend is available on
+[http://localhost:8080](http://localhost:8080) and the backend on
+[http://localhost:3000](http://localhost:3000). The current IP is displayed in
+the "Configure" link.
 
