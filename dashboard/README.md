@@ -7,17 +7,18 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Running in Docker
+## Running with Docker Compose
 
-To build and run this app in Docker use the scripts in the project root:
+Use the scripts in the project root to start the full stack using
+`docker-compose`:
 
 ```sh
 ../start_dashboard.sh
 ```
 
-On Windows run `start_dashboard.bat`. These scripts build the image, obtain your
-public IP address and run the container with that value passed as `PUBLIC_IP`.
-Then open [http://localhost:8080](http://localhost:8080) in your browser.
+On Windows run `start_dashboard.bat`. The scripts will build both the frontend
+and backend images, inject your public IP address and launch the containers.
+Open [http://localhost:8080](http://localhost:8080) to view the dashboard.
 
 ## Expanding the ESLint configuration
 
