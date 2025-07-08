@@ -25,6 +25,7 @@ app.post('/api/outlook/login', async (req, res) => {
     return res.status(400).json({ error: 'Login already in progress' });
   }
   let codeInfo
+  let loginError = false
   loginInProgress = true
   const request = {
     deviceCodeCallback: (response) => {
@@ -43,11 +44,17 @@ app.post('/api/outlook/login', async (req, res) => {
     })
     .catch((err) => {
       console.error('Login failed', err)
+      loginError = true
       loginInProgress = false
     })
 
-  while (!codeInfo) {
+  const timeoutMs = 10000
+  const start = Date.now()
+  while (!codeInfo && !loginError && Date.now() - start < timeoutMs) {
     await new Promise((r) => setTimeout(r, 50))
+  }
+  if (loginError || !codeInfo) {
+    return res.status(500).json({ error: 'login failed' })
   }
   res.json({
     message: codeInfo.message,
