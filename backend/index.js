@@ -2,6 +2,19 @@ import express from 'express'
 // fetch is available in Node 20
 import { PublicClientApplication } from '@azure/msal-node'
 
+const requiredVars = ['MSAL_CLIENT_ID', 'MSAL_TENANT_ID']
+for (const name of requiredVars) {
+  const value = process.env[name]
+  if (!value) {
+    console.warn(
+      `Environment variable ${name} is not set. Did you configure it in the .env file?`
+    )
+  } else if (value.trim() !== value) {
+    console.warn(`Trimming whitespace from ${name} value`)
+    process.env[name] = value.trim()
+  }
+}
+
 const msalConfig = {
   auth: {
     clientId: process.env.MSAL_CLIENT_ID,
