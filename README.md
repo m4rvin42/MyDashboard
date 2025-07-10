@@ -25,6 +25,14 @@ to build and start both containers. The frontend is available on
 [http://localhost:3000](http://localhost:3000). The current IP is displayed in
 the "Configure" link.
 
+### Standalone device code test
+
+```sh
+./start_device_login_test.sh
+```
+This builds a small container that immediately starts the MSAL device code flow and prints the login URL and code. Replace the placeholders in `device-code-test/index.js` with your Azure Entra client and tenant IDs.
+
+
 ### Configuration
 
 Docker Compose loads variables from a file named `.env` in this directory.
