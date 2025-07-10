@@ -32,13 +32,14 @@ the "Configure" link.
 ```
 This builds a small container that immediately starts the MSAL device code flow and prints the login URL and code. Replace the placeholders in `device-code-test/index.js` with your Azure Entra client and tenant IDs.
 
-### Standalone network test
+
 
 ```sh
 ./start_network_test.sh
 ```
 This simple container just requests `https://www.google.com` and prints the HTTP
 status code so you can verify outbound internet connectivity from within Docker.
+
 
 
 ### Configuration
