@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import LoginQRCode from './LoginQRCode.jsx'
 
 export default function MailWidget({ showBorder = true } = {}) {
   const [loginInfo, setLoginInfo] = useState(null)
@@ -65,9 +66,10 @@ export default function MailWidget({ showBorder = true } = {}) {
     return (
       <div style={style}>
         <div>Please login:</div>
-        <div>
-          Open <a href={loginInfo.verificationUri} target="_blank" rel="noreferrer">{loginInfo.verificationUri}</a> and enter code <b>{loginInfo.userCode}</b>
-        </div>
+        <LoginQRCode
+          verificationUri={loginInfo.verificationUri}
+          userCode={loginInfo.userCode}
+        />
       </div>
     )
   }

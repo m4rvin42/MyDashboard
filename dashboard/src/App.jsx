@@ -1,6 +1,6 @@
 import './App.css'
 
-import DeviceCodeLogin from './DeviceCodeLogin.jsx'
+import ConfigQRCode from './ConfigQRCode.jsx'
 import TestWidget from './TestWidget.jsx'
 import BackendTestWidget from './BackendTestWidget.jsx'
 import DateTimeWidget from './DateTimeWidget.jsx'
@@ -46,7 +46,7 @@ function App() {
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
       {renderNode(layout)}
       <div style={{ position: 'absolute', top: 10, right: 10 }}>
-        <DeviceCodeLogin />
+        <ConfigQRCode />
       </div>
     </div>
   )
