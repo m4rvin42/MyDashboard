@@ -3,7 +3,8 @@ services:
   frontend:
     build: ./dashboard
     environment:
-      - PUBLIC_IP=${PUBLIC_IP}
+      - PUBLIC_IP=192.168.2.35
+ #    - PUBLIC_IP=${PUBLIC_IP}
     ports:
       - "8080:80"
     depends_on:
