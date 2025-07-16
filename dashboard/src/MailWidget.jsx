@@ -35,6 +35,12 @@ export default function MailWidget({ showBorder = true } = {}) {
     }
   }
 
+  async function handleLogout() {
+    await fetch('/api/logout', { method: 'POST' })
+    setMails(null)
+    setLoginInfo(null)
+  }
+
   useEffect(() => {
     fetchMails()
     const id = setInterval(fetchMails, 60000)
@@ -57,6 +63,9 @@ export default function MailWidget({ showBorder = true } = {}) {
 
   return (
     <div style={style}>
+      <button onClick={handleLogout} style={{ marginBottom: '4px' }}>
+        Logout
+      </button>
       <ul style={{ padding: 0, margin: 0, listStyle: 'none' }}>
         {mails.map((m) => (
           <li key={m.id} style={{ marginBottom: '4px' }}>

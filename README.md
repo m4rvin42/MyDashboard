@@ -25,3 +25,6 @@ to build and start both containers. The frontend is available on
 [http://localhost:3000](http://localhost:3000). The current IP is displayed in
 the "Configure" link.
 
+The backend exposes a `/api/logout` endpoint that clears the mail widget
+authentication token so the next mail fetch will require logging in again.
+
