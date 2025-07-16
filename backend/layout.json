@@ -1,0 +1,38 @@
+{
+  "type": "vertical",
+  "children": [
+    {
+      "type": "horizontal",
+      "children": [
+        { "type": "widget", "widget": "DateTimeWidget" },
+        { "type": "widget", "widget": "StringWidget", "props": { "text": "Hello from StringWidget" } }
+      ],
+      "style": { "flex": 1 }
+    },
+    {
+      "type": "horizontal",
+      "children": [
+        { "type": "widget", "widget": "TestWidget" },
+        { "type": "widget", "widget": "TestWidget" },
+        { "type": "widget", "widget": "TestWidget" }
+      ],
+      "style": { "flex": 1 }
+    },
+    {
+      "type": "horizontal",
+      "children": [
+        { "type": "widget", "widget": "TestWidget" },
+        { "type": "widget", "widget": "TestWidget" },
+        { "type": "widget", "widget": "TestWidget" }
+      ],
+      "style": { "flex": 1 }
+    },
+    {
+      "type": "horizontal",
+      "children": [
+        { "type": "widget", "widget": "MailWidget" }
+      ],
+      "style": { "flex": 1 }
+    }
+  ]
+}
