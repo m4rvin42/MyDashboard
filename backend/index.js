@@ -99,6 +99,18 @@ app.get('/api/mails', async (req, res) => {
   }
 })
 
+app.post('/api/logout', async (req, res) => {
+  accessToken = null
+  loginPromise = null
+  deviceCodeInfo = null
+  try {
+    await pca.getTokenCache().clear()
+  } catch (err) {
+    console.error('Failed to clear token cache', err)
+  }
+  res.json({ loggedOut: true })
+})
+
 app.get('/', (req, res) => {
   res.send('Backend running');
 });
