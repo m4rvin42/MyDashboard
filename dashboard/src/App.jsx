@@ -41,7 +41,25 @@ function renderNode(node, index) {
 }
 
 function App() {
-  const layout = loadLayout()
+//<<<<<<< Feature/presistence
+  const [layout, setLayout] = useState(null)
+  const ip = window.PUBLIC_IP || 'unknown'
+  const [backendIp, setBackendIp] = useState('...')
+
+  useEffect(() => {
+    loadLayout().then(setLayout)
+  }, [])
+
+  useEffect(() => {
+    fetch('/api/public-ip')
+      .then((r) => r.json())
+      .then((d) => setBackendIp(d.ip))
+      .catch(() => setBackendIp('error'))
+  }, [])
+  if (!layout) return null
+//=======
+//  const layout = loadLayout()
+//>>>>>>> main
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
       {renderNode(layout)}

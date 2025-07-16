@@ -37,23 +37,27 @@ export const defaultLayout = {
   ]
 }
 
-export function loadLayout() {
+export async function loadLayout() {
   try {
-    const data = localStorage.getItem('layout')
-    if (data) {
-      return JSON.parse(data)
+    const resp = await fetch('/api/layout')
+    if (resp.ok) {
+      return await resp.json()
     }
   } catch (err) {
-    console.error('Failed to parse layout from localStorage', err)
+    console.error('Failed to load layout from backend', err)
   }
   return defaultLayout
 }
 
-export function saveLayout(layout) {
+export async function saveLayout(layout) {
   try {
-    localStorage.setItem('layout', JSON.stringify(layout))
+    await fetch('/api/layout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(layout),
+    })
   } catch (err) {
-    console.error('Failed to save layout', err)
+    console.error('Failed to save layout to backend', err)
   }
 }
 
