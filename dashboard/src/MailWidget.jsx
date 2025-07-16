@@ -17,27 +17,33 @@ export default function MailWidget({ showBorder = true } = {}) {
     try {
       const resp = await fetch('/api/mails')
       if (resp.status === 401) {
-        const loginResp = await fetch('/api/login')
-        if (!loginResp.ok) {
+        try {
+          const loginResp = await fetch('/api/login')
+          if (!loginResp.ok) throw new Error('login failed')
+          const data = await loginResp.json()
+          if (!data.loggedIn) {
+            if (!data.verificationUri || !data.userCode) {
+              throw new Error('login failed')
+            }
+            setLoginInfo(data)
+            setMails(null)
+            setError(null)
+            return
+          }
+          setLoginInfo(null)
+          setError(null)
+          return fetchMails()
+        } catch {
+          setLoginInfo(null)
+          setMails(null)
           setError('Failed to start login')
           return
         }
-        const data = await loginResp.json()
-        if (!data.loggedIn) {
-          if (!data.verificationUri || !data.userCode) {
-            setError('Failed to start login')
-            return
-          }
-          setLoginInfo(data)
-          setMails(null)
-          return
-        }
-        setLoginInfo(null)
-        return fetchMails()
       }
       const data = await resp.json()
       setMails(data)
       setLoginInfo(null)
+      setError(null)
     } catch {
       setError('Failed to load mails')
     }
