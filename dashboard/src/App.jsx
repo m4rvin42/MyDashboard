@@ -1,6 +1,6 @@
 import './App.css'
-import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+
+import ConfigQRCode from './ConfigQRCode.jsx'
 import TestWidget from './TestWidget.jsx'
 import BackendTestWidget from './BackendTestWidget.jsx'
 import DateTimeWidget from './DateTimeWidget.jsx'
@@ -41,6 +41,7 @@ function renderNode(node, index) {
 }
 
 function App() {
+//<<<<<<< Feature/presistence
   const [layout, setLayout] = useState(null)
   const ip = window.PUBLIC_IP || 'unknown'
   const [backendIp, setBackendIp] = useState('...')
@@ -56,11 +57,14 @@ function App() {
       .catch(() => setBackendIp('error'))
   }, [])
   if (!layout) return null
+//=======
+//  const layout = loadLayout()
+//>>>>>>> main
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
       {renderNode(layout)}
       <div style={{ position: 'absolute', top: 10, right: 10 }}>
-        <Link to="/config">{`Configure (${ip} / ${backendIp})`}</Link>
+        <ConfigQRCode />
       </div>
     </div>
   )
