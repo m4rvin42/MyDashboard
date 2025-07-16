@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { loadLayout, saveLayout } from './layout.js'
 import { VerticalStackPanel, HorizontalStackPanel } from './StackPanels.jsx'
@@ -59,7 +59,11 @@ function removeAtPath(layout, path) {
 
 export default function ConfigPage() {
   const navigate = useNavigate()
-  const [layout, setLayout] = useState(loadLayout())
+  const [layout, setLayout] = useState(null)
+
+  useEffect(() => {
+    loadLayout().then(setLayout)
+  }, [])
 
   const allowDrop = (e) => e.preventDefault()
 
@@ -288,10 +292,10 @@ export default function ConfigPage() {
   }
 
   function handleSave() {
-    saveLayout(layout)
-    navigate('/')
+    saveLayout(layout).then(() => navigate('/'))
   }
 
+  if (!layout) return <div>Loading...</div>
   return (
     <div style={{ display: 'flex', height: '100%', padding: '1rem' }}>
       <div style={{ width: 150, marginRight: 10 }}>
