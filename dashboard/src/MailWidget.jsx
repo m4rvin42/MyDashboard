@@ -18,8 +18,16 @@ export default function MailWidget({ showBorder = true } = {}) {
       const resp = await fetch('/api/mails')
       if (resp.status === 401) {
         const loginResp = await fetch('/api/login')
+        if (!loginResp.ok) {
+          setError('Failed to start login')
+          return
+        }
         const data = await loginResp.json()
         if (!data.loggedIn) {
+          if (!data.verificationUri || !data.userCode) {
+            setError('Failed to start login')
+            return
+          }
           setLoginInfo(data)
           setMails(null)
           return
