@@ -14,6 +14,15 @@ export default function MailWidget({ showBorder = true } = {}) {
     padding: '4px',
   }
 
+  const bodyStyle = {
+    display: '-webkit-box',
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'pre-wrap',
+  }
+
   async function startLogin() {
     try {
       const loginResp = await fetch('/api/login')
@@ -83,6 +92,7 @@ export default function MailWidget({ showBorder = true } = {}) {
         {mails.map((m) => (
           <li key={m.id} style={{ marginBottom: '4px' }}>
             <strong>{m.subject}</strong>
+            <div style={bodyStyle}>{m.bodyPreview || m.body?.content || ''}</div>
           </li>
         ))}
       </ul>
