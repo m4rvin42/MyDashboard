@@ -73,7 +73,7 @@ async function ensureAccessToken() {
 async function fetchMails() {
   const token = await ensureAccessToken()
   const endpoint =
-    'https://graph.microsoft.com/v1.0/me/mailFolders/inbox/messages?$top=5'
+    'https://graph.microsoft.com/v1.0/me/mailFolders/inbox/messages?$top=5&$select=id,subject,bodyPreview,body'
   const { data } = await axios.get(endpoint, {
     headers: { Authorization: `Bearer ${token}` },
   })
