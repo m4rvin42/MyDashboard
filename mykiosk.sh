@@ -20,12 +20,7 @@ if [[ -z $URL ]]; then
 fi
 
 # ---------- wait until a display server is running ----------
-until pgrep -x Xorg   >/dev/null 2>&1 || \
-      pgrep -x X      >/dev/null 2>&1 || \
-      pgrep -x wayfire>/dev/null 2>&1 || \
-      pgrep -x labwc  >/dev/null 2>&1; do
-  sleep 0.5
-done
+
 
 # ---------- optional niceties ----------
 # hide cursor after 1 s of inactivity
