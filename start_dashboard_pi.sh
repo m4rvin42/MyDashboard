@@ -13,4 +13,4 @@ docker compose up --build -d
 sleep 5
 
 # Enable kiosk mode to open the dashboard URL
-sudo ./kioskctl enable "http://localhost:8080"
+sudo KIOSK_USER=$USER ./kioskctl enable "http://localhost:8080"

@@ -32,3 +32,6 @@ to build and start both containers. The frontend is available on
 the "Configure" link.
 Use `kioskctl` to enable or disable the kiosk mode manually.
 
+The kiosk helper defaults to the `pi` user. Set the `KIOSK_USER` environment
+variable if your Raspberry Pi user has a different name.
+
