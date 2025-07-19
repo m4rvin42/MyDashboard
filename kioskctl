@@ -15,7 +15,7 @@ set -euo pipefail
 
 # ---------- configuration paths ----------
 CONF_FILE="/etc/kiosk.conf"                       # keeps only   URL=\"\u2026\"
-PI_USER="${KIOSK_USER:-pi}"
+PI_USER="$jan"
 RUN_SCRIPT="/home/${PI_USER}/.local/bin/run-kiosk.sh"
 SERVICE_FILE="/home/${PI_USER}/.config/systemd/user/kiosk.service"
 LXDE_AUTOSTART="/home/${PI_USER}/.config/lxsession/LXDE-pi/autostart"
