@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
-# kioskctl – enable / disable Chromium kiosk mode for the “pi” user
+# kioskctl – enable / disable Chromium kiosk mode for the Raspberry Pi user
+# Default user is "pi" but can be overridden via the KIOSK_USER environment variable.
 # Works on Raspberry\u00A0Pi\u00A0OS Bookworm (Wayland) and Bullseye (X11).
 #
 # Usage:
@@ -14,7 +15,7 @@ set -euo pipefail
 
 # ---------- configuration paths ----------
 CONF_FILE="/etc/kiosk.conf"                       # keeps only   URL=\"\u2026\"
-PI_USER="pi"                                      # change if you use another user
+PI_USER="${KIOSK_USER:-pi}"
 RUN_SCRIPT="/home/${PI_USER}/.local/bin/run-kiosk.sh"
 SERVICE_FILE="/home/${PI_USER}/.config/systemd/user/kiosk.service"
 LXDE_AUTOSTART="/home/${PI_USER}/.config/lxsession/LXDE-pi/autostart"
