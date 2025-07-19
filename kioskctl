@@ -68,6 +68,11 @@ EOF2
   # ensure \u201cpi\u201d services can start at boot even before a login
   loginctl enable-linger "$PI_USER" 2>/dev/null || true
 
+  # bootstrap the per‑user systemd instance so that the next commands work
+  loginctl start-user "$PI_USER"
+  # give logind a moment to create /run/user/$UID and the D‑Bus socket
+  sleep 0.5
+
   # activate the unit
   as_pi systemctl --user daemon-reload
   as_pi systemctl --user enable --now kiosk.service
