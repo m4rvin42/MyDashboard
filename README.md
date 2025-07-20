@@ -6,6 +6,17 @@ Prebuilt images are pulled from GitHub Container Registry, and the helper
 scripts start the stack while injecting the host's public IP address via the
 `PUBLIC_IP` environment variable.
 
+The Docker images referenced in the compose files live in GitHub Container
+Registry (GHCR) and may require authentication. Log in using your GitHub
+credentials before starting the stack:
+
+```bash
+echo <token> | docker login ghcr.io -u <github-username> --password-stdin
+```
+
+Make sure to run the helper script as the same user who performed the login
+(avoid `sudo` if possible).
+
 ## Usage
 
 ### Linux
