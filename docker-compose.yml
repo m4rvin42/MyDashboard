@@ -1,7 +1,7 @@
-version: '3.8'
+version: '3.9'
 services:
   frontend:
-    build: ./dashboard
+    image: ghcr.io/${OWNER}/dashboard-frontend
     environment:
       - PUBLIC_IP=192.168.2.35
  #    - PUBLIC_IP=${PUBLIC_IP}
@@ -10,7 +10,7 @@ services:
     depends_on:
       - backend
   backend:
-    build: ./backend
+    image: ghcr.io/${OWNER}/dashboard-backend
     environment:
       - NODE_OPTIONS=--dns-result-order=ipv4first
       - PUBLIC_IP=192.168.2.35
