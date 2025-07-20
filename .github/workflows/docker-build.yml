@@ -26,6 +26,8 @@ jobs:
           context: ./dashboard
           file: ./dashboard/Dockerfile
           push: true
+          build-args: |
+            VERSION=${{ github.run_number }}
           tags: |
             ghcr.io/${{ github.repository_owner }}/dashboard:latest
             ghcr.io/${{ github.repository_owner }}/dashboard:v${{ github.run_number }}
@@ -36,6 +38,8 @@ jobs:
           context: ./backend
           file: ./backend/Dockerfile
           push: true
+          build-args: |
+            VERSION=${{ github.run_number }}
           tags: |
             ghcr.io/${{ github.repository_owner }}/backend:latest
             ghcr.io/${{ github.repository_owner }}/backend:v${{ github.run_number }}
