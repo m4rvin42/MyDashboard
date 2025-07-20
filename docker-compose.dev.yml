@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+  frontend:
+    build: ./dashboard
+    profiles:
+      - dev
+  backend:
+    build: ./backend
+    profiles:
+      - dev
