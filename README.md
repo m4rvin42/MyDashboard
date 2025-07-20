@@ -33,3 +33,14 @@ The frontend is available on
 [http://localhost:3000](http://localhost:3000). The current IP is displayed in
 the "Configure" link.
 
+## GitHub Actions
+
+This repository includes a workflow that builds Docker images for both the dashboard and the backend. It runs on every push to `main` and also nightly via a cron schedule. The workflow pushes the containers to GHCR and tags them as `latest` and `v<run_number>`.
+
+Example of pulling a specific build:
+
+```sh
+docker pull ghcr.io/<owner>/dashboard:v123
+docker pull ghcr.io/<owner>/backend:v123
+```
+
