@@ -3,8 +3,7 @@ services:
   frontend:
     build: ./dashboard
     environment:
-      - PUBLIC_IP=192.168.2.35
- #    - PUBLIC_IP=${PUBLIC_IP}
+      - PUBLIC_IP=${PUBLIC_IP}
     ports:
       - "8080:80"
     depends_on:
@@ -13,8 +12,7 @@ services:
     build: ./backend
     environment:
       - NODE_OPTIONS=--dns-result-order=ipv4first
-      - PUBLIC_IP=192.168.2.35
- #    - PUBLIC_IP=${PUBLIC_IP}
+      - PUBLIC_IP=${PUBLIC_IP}
     dns: 8.8.8.8
     ports:
       - "3000:3000"
