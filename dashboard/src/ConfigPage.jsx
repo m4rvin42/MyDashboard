@@ -163,6 +163,22 @@ export default function ConfigPage() {
               props: { fontSize, textColor, backgroundColor },
             }
           }
+          if (node.widget === 'MailWidget') {
+            const textColor = prompt(
+              'Text color',
+              node.props?.textColor || '#000',
+            )
+            if (textColor === null) return node
+            const backgroundColor = prompt(
+              'Background color',
+              node.props?.backgroundColor || 'transparent',
+            )
+            if (backgroundColor === null) return node
+            return {
+              ...node,
+              props: { textColor, backgroundColor },
+            }
+          }
           return node
         }
         const cells = prompt(

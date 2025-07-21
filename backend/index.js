@@ -18,6 +18,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const layoutPath = path.join(__dirname, 'layout.json')
 
 let accessToken = null
+let expiresOn = null
+let account = null
 let loginPromise = null
 let deviceCodeInfo = null
 
@@ -34,10 +36,12 @@ function startLogin() {
             verificationUri: resp.verificationUri,
           }
         },
-        scopes: ['User.Read', 'Mail.Read'],
+        scopes: ['User.Read', 'Mail.Read', 'offline_access'],
       })
       .then((res) => {
         accessToken = res.accessToken
+        expiresOn = res.expiresOn
+        account = res.account
         loginPromise = null
         deviceCodeInfo = null
       })
@@ -62,7 +66,30 @@ function startLogin() {
 }
 
 async function ensureAccessToken() {
-  if (accessToken) return accessToken
+  if (
+    accessToken &&
+    expiresOn &&
+    expiresOn.getTime() - Date.now() > 5 * 60 * 1000
+  ) {
+    return accessToken
+  }
+  if (account) {
+    try {
+      const res = await pca.acquireTokenSilent({
+        scopes: ['User.Read', 'Mail.Read'],
+        account,
+      })
+      accessToken = res.accessToken
+      expiresOn = res.expiresOn
+      account = res.account
+      return accessToken
+    } catch (err) {
+      console.error('Silent token acquisition failed', err)
+      accessToken = null
+      expiresOn = null
+      account = null
+    }
+  }
   if (loginPromise) {
     await loginPromise
     if (accessToken) return accessToken
@@ -126,6 +153,8 @@ app.get('/api/mails', async (req, res) => {
 
 app.post('/api/logout', async (req, res) => {
   accessToken = null
+  expiresOn = null
+  account = null
   loginPromise = null
   deviceCodeInfo = null
   try {
