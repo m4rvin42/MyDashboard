@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react'
 import LoginQRCode from './LoginQRCode.jsx'
 
-export default function MailWidget({ showBorder = true } = {}) {
+export default function MailWidget({
+  textColor = '#000',
+  backgroundColor = 'transparent',
+  showBorder = true,
+} = {}) {
   const [loginInfo, setLoginInfo] = useState(null)
   const [mails, setMails] = useState(null)
   const [error, setError] = useState(null)
@@ -12,6 +16,8 @@ export default function MailWidget({ showBorder = true } = {}) {
     height: '100%',
     overflow: 'auto',
     padding: '4px',
+    color: textColor,
+    backgroundColor,
   }
 
   const bodyStyle = {
@@ -67,7 +73,7 @@ export default function MailWidget({ showBorder = true } = {}) {
 
   useEffect(() => {
     fetchMails()
-    const id = setInterval(fetchMails, 60000)
+    const id = setInterval(fetchMails, 300000)
     return () => clearInterval(id)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
