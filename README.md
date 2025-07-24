@@ -25,3 +25,9 @@ to build and start both containers. The frontend is available on
 [http://localhost:3000](http://localhost:3000). The current IP is displayed in
 the "Configure" link.
 
+## Automatic Updates
+
+The compose stack now includes a [Watchtower](https://containrrr.dev/watchtower/)
+service that periodically checks for new container images and restarts the
+frontend and backend when updates are available.
+
