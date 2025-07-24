@@ -133,6 +133,10 @@ app.get('/api/public-ip', (req, res) => {
   res.json({ ip: process.env.PUBLIC_IP || 'unknown' });
 });
 
+app.get('/api/version', (req, res) => {
+  res.json({ version: process.env.VERSION || 'unknown' });
+});
+
 app.get('/api/login', async (req, res) => {
   try {
     const info = await startLogin()
