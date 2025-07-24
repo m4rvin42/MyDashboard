@@ -10,6 +10,7 @@ RUN npm install --omit=dev && npm cache clean --force
 COPY . .
 
 LABEL org.opencontainers.image.version=$VERSION
+ENV VERSION=$VERSION
 
 EXPOSE 3000
 CMD ["npm","start"]

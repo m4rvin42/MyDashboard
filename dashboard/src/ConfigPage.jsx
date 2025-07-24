@@ -60,9 +60,11 @@ function removeAtPath(layout, path) {
 export default function ConfigPage() {
   const navigate = useNavigate()
   const [layout, setLayout] = useState(null)
+  const [version, setVersion] = useState('unknown')
 
   useEffect(() => {
     loadLayout().then(setLayout)
+    if (window.VERSION) setVersion(window.VERSION)
   }, [])
 
   const allowDrop = (e) => e.preventDefault()
@@ -329,6 +331,7 @@ export default function ConfigPage() {
         <button style={{ marginTop: '1rem' }} onClick={handleSave}>
           Save
         </button>
+        <div style={{ marginTop: '0.5rem' }}>Version: {version}</div>
       </div>
       <DropZone
         onDrop={(e) => handleDrop(e, [])}
