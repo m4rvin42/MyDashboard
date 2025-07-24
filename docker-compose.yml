@@ -1,19 +1,35 @@
+version: '3.8'
 services:
   frontend:
     image: ghcr.io/m4rvin42/dashboard:latest
     environment:
-      - PUBLIC_IP=${PUBLIC_IP}
+      - PUBLIC_IP=192.168.2.51
+ #    - PUBLIC_IP=${PUBLIC_IP}
       - VERSION=${VERSION:-unknown}
     ports:
       - "8080:80"
     depends_on:
       - backend
+
   backend:
     image: ghcr.io/m4rvin42/backend:latest
     environment:
       - NODE_OPTIONS=--dns-result-order=ipv4first
-      - PUBLIC_IP=${PUBLIC_IP}
+      - PUBLIC_IP=192.168.2.51
+ #    - PUBLIC_IP=${PUBLIC_IP}
       - VERSION=${VERSION:-unknown}
     dns: 8.8.8.8
     ports:
       - "3000:3000"
+
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=300
+    restart: unless-stopped
+    depends_on:
+      - frontend
+      - backend
